@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   // Connect to the database (host, username, password)
-  $con = mssql_connect('localhost','keystone','Key_16_Stone') or die('Could not connect to the server!');
+  $con = mssql_connect('127.0.0.1','keystone','Key_16_Stone') or die('Could not connect to the server!');
   // Select a database:
   mssql_select_db('keystonedb') or die('Could not select a database.');
 
