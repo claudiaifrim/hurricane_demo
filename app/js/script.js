@@ -23,7 +23,7 @@ $(function() {
             var results = "<ul>";
 
             for(var key in response) {
-              results +="<li><a href='"+response[key].hurricaneurl+" target='_blank'>" + response[key].name + "</a> | " + response[key].country + " | " + response[key].province + " | " + response[key].year + "</li>" ;
+              results +="<li><a href='"+response[key].hurricaneurl+"' target='_blank'>" + response[key].name + "</a> | " + response[key].country + " | " + response[key].province + " | " + response[key].year + "</li>" ;
             }
             results += "</ul>";
             $('#results-hurricanes').html(results);
@@ -65,7 +65,7 @@ $(function() {
             var results = "<ul>";
 
             for(var key in response) {
-              results +="<li><a href='"+response[key].hurricaneurl+" target='_blank'>" + response[key].name + "</a> | <a href='"+response[key].countryurl+"' target='_blank'>" + response[key].country + "</a> | (" + response[key].countrypop + ") | " + "<a href='"+response[key].provinceurl+"' target='_blank'>" + response[key].province + "</a> | (" + response[key].provincepop + ") | " + response[key].year + "</li>";
+              results +="<li><a href='"+response[key].hurricaneurl+"' target='_blank'>" + response[key].name + "</a> | <a href='"+response[key].countryurl+"' target='_blank'>" + response[key].country + "</a> | (" + response[key].countrypop + ") | " + "<a href='"+response[key].provinceurl+"' target='_blank'>" + response[key].province + "</a> | (" + response[key].provincepop + ") | " + response[key].year + "</li>";
             }
             results += "</ul>";
             $('#results-areas').html(results);
