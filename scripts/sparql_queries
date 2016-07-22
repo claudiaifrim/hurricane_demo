@@ -3,7 +3,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX dbp: <http://dbpedia.org/property/>
 PREFIX yago: <http://dbpedia.org/class/yago/>
-select COUNT(DISTINCT(?s))
+select  *  ######COUNT(DISTINCT(?s))
 where{
   ?s dbo:abstract ?abstract .
   ?s dbp:name ?name .
@@ -26,7 +26,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX dbp: <http://dbpedia.org/property/>
 PREFIX yago: <http://dbpedia.org/class/yago/>
-select DISTINCT ?areas ?areaLabel
+select DISTINCT ?s ?areaLabel   
 where{
   ?s dbo:abstract ?abstract .
   ?s dbp:name ?name .
@@ -43,13 +43,20 @@ where{
 
 #### GeoNames query
 PREFIX gn: <http://www.geonames.org/ontology#>
-SELECT ?geoLocation ?code ?name ?country ?countryName
+PREFIX wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+SELECT ?geoLocation ?code ?name ?country ?countryName ?provincepop ?countrypop ?geoLat ?geoLong ?countryLat ?countryLong
 WHERE{
   ?geoLocation gn:featureClass <http://www.geonames.org/ontology#A> ;
     gn:featureCode ?code .
+  ?geoLocation gn:population ?provincepop .
+  ?geoLocation wgs84:lat ?geoLat .
+  ?geoLocation wgs84:long ?geoLong .
   OPTIONAL {
-    ?geoLocation gn:parentCountry ?country .
+    ?geoLocation gn:parentFeature ?country .
     ?country gn:name ?countryName .
+    ?country gn:population ?countrypop .
+    ?country wgs84:lat ?countryLat .
+    ?country wgs84:long ?countryLong .
   }
   FILTER(?code = <http://www.geonames.org/ontology#A.ADM1> || ?code = <http://www.geonames.org/ontology#A.PCLI> || ?code = <http://www.geonames.org/ontology#A.PCLD>)
   ?geoLocation gn:name ?name .
