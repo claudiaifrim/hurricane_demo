@@ -35,9 +35,9 @@
           <form class="horizontal-form" role="form">
             <h3>Find an area</h3>
             <div class="form-group">
-              <input type="text" name="area_name" class="form-control" required placeholder="Type a country name or an administrativ area...">
+              <input type="text" id="area-name" name="area_name" class="form-control" required placeholder="Type a country name or an administrativ area...">
             </div>
-            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Search</button>
+            <button id="search-area" type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Search</button>
           </form>
         </div>
         <div class="col-md-12" style="padding-top:10px;">
@@ -49,11 +49,18 @@
         </div>
       </div>
       <hr/>
+      <div class="row">
+        <div class="col-md-12">
+          <ul id="results-areas">
+          </ul>
+        </div>
+      </div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="libs/jquery/jquery-1.11.3.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
