@@ -1,0 +1,41 @@
+#### Query for hurricanes
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+select COUNT(DISTINCT(?s))
+where{
+  ?s dbo:abstract ?abstract .
+  ?s dbp:name ?name .
+  ?s dbp:year ?year .
+  ?s rdf:type ?hurType .
+  OPTIONAL {
+    ?s dbp:hurricaneSeason ?season .
+    ?s dbp:damages ?damages .
+    ?s dbp:fatalities ?fatalities .
+    ?s dbp:1MinWinds ?winds .
+    ?s dbp:formed ?started .
+    ?s dbp:dissipated ?ended . 
+    ?s dbp:areas ?areas .
+  }
+  FILTER (?hurType = yago:Hurricane111467018 || ?hurType = yago:Category5AtlanticHurricanes || ?hurType = yago:RetiredAtlanticHurricanes)
+}
+
+##### area and area labels
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX yago: <http://dbpedia.org/class/yago/>
+select DISTINCT ?areas ?areaLabel
+where{
+  ?s dbo:abstract ?abstract .
+  ?s dbp:name ?name .
+  ?s dbp:year ?year .
+  ?s rdf:type ?hurType .
+  ?s dbp:areas ?areas .
+  BIND (IF(isURI(?areas), ?areas, URI(CONCAT("http://dbpedia.org/resource/", ENCODE_FOR_URI(?areas)))) AS ?areas) .
+  ?areas rdfs:label ?areaLabel .
+  FILTER (?hurType = yago:Hurricane111467018 || ?hurType = yago:Category5AtlanticHurricanes || ?hurType = yago:RetiredAtlanticHurricanes)
+  FILTER (lang(?abstract) = "en" && lang(?areaLabel) = "en")
+}
+LIMIT 100
