@@ -23,7 +23,7 @@ $(function() {
             var results = "<ul>";
 
             for(var key in response) {
-              results +="<li>" + response[key].country + "</li>" 
+              results +="<li><a href='"+response[key].hurricaneurl+" target='_blank'>" + response[key].name + "</a> | " + response[key].country + " | " + response[key].province + " | " + response[key].year + "</li>" 
             }
             results += "</ul>";
             $('#results-hurricanes').html(results);
