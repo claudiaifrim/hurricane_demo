@@ -3,7 +3,7 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 PREFIX dbp: <http://dbpedia.org/property/>
 PREFIX yago: <http://dbpedia.org/class/yago/>
-select  *  ######COUNT(DISTINCT(?s))
+select  *  
 where{
   ?s dbo:abstract ?abstract .
   ?s dbp:name ?name .
@@ -62,3 +62,15 @@ WHERE{
   ?geoLocation gn:name ?name .
   FILTER(CONTAINS(?name, @partofname)) 
 }
+
+
+
+
+
+
+
+
+
+
+
+######COUNT(DISTINCT(?s))
