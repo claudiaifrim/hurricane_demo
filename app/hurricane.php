@@ -14,31 +14,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
 
   // Connect to the database (host, username, password)
-  $con = mssql_connect('127.0.0.1','keystone','Key_16_Stone') or die('Could not connect to the server! Error: ' . mysql_error());
-  // Select a database:
-  mssql_select_db('keystonedb') or die('Could not select a database.');
+  $conn = new mysqli('127.0.0.1','keystone','Key_16_Stone','keystonedb');
 
-  $SQL = "select s.hurricaneurl, s.name, s.year, s.hurType, s.season, s.damages, s.fatalities, s.winds, s.started, s.ended, a.country, a.countryurl, a.cuontrypop, a.province, a.provinceurl, a.provincepop from hurricanes s inner join areas a on s.hurricaneurl = a.hurricaneurl where s.name like '%" . $hurricane_name . "%';";
+  // Check connection
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  } 
+  
+  $sql = "select s.hurricaneurl, s.name, s.year, s.hurType, s.season, s.damages, s.fatalities, s.winds, s.started, s.ended, a.country, a.countryurl, a.cuontrypop, a.province, a.provinceurl, a.provincepop from hurricanes s inner join areas a on s.hurricaneurl = a.hurricaneurl where s.name like '%" . $hurricane_name . "%';";
 
   // if (!empty($hurricane_name) && !empty($season_range)) {
-  //   $SQL = "select * from hurricanes where name like '%" . $hurricane_name . "%' and season like '%" . $season_range . "%';"
+  //   $sql = "select * from hurricanes where name like '%" . $hurricane_name . "%' and season like '%" . $season_range . "%';"
   // }
 
   // Execute query:
-	$result = mssql_query($SQL) or die('A error occured: ' . mysql_error());
+	$rows = $conn->query($sql);
 	 
-	// Get result count:
-	$Count = mssql_num_rows($result);
-	// print "Showing $count rows:<hr/>\n\n";
+  $result = array();
+
+	if ($rows->num_rows > 0) {
+    // output data of each row
+    while($Row = $rows->fetch_assoc()) {
+      $x = array('hurricaneurl' => $Row['hurricaneurl'], 'name' => $Row['name'], 'year' =>  $Row['year'], 'country' =>  $Row['country'], 'province' =>  $Row['province']);
+      array_push($result, $x);
+    }
+  } else {
+      $result = array();
+  }
 	 
-	$result = array();
-	// Fetch rows:
-	while ($Row = mssql_fetch_assoc($result)) {
-    $x = array('hurricaneurl' => $Row['hurricaneurl'], 'name' => $Row['name'], 'year' =>  $Row['year'], 'country' =>  $Row['country'], 'province' =>  $Row['province']);
-	 	array_push($result, $x);	
-	}
-	 
-	mssql_close($con);
+	$conn->close();
 
   die($result);
 
