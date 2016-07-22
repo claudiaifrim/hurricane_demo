@@ -14,8 +14,6 @@ $(function() {
           season_range: year
         },
         success: function(response){
-          alert(response);
-
           if(Object.getOwnPropertyNames(response).length === 0){
             var results = "<ul>";
             results +="<li>No results for '" + name + "'.</li>"
@@ -24,8 +22,8 @@ $(function() {
           } else {
             var results = "<ul>";
 
-            for(var key in response) {
-              results +="<li>" + response[key] + "</li>" 
+            foreach (var key in response) {
+              results +="<li>" + response[key].country + "</li>" 
             }
             results += "</ul>";
             $('#results-hurricanes').html(results);
