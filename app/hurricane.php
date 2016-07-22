@@ -20,10 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   $SQL = "select s.hurricaneurl, s.name, s.year, s.hurType, s.season, s.damages, s.fatalities, s.winds, s.started, s.ended, a.country, a.countryurl, a.cuontrypop, a.province, a.provinceurl, a.provincepop from hurricanes s inner join areas a on s.hurricaneurl = a.hurricaneurl where s.name like '%" . $hurricane_name . "%';";
 
-  // Example query: (TOP 10 equal LIMIT 0,10 in MySQL)
-  if ($hurricane_name != '' && $season_range != '') {
-    $SQL = "select * from hurricanes where name like '%" . $hurricane_name . "%' and season like '%" . $season_range . "%';"
-  }
+  // if (!empty($hurricane_name) && !empty($season_range)) {
+  //   $SQL = "select * from hurricanes where name like '%" . $hurricane_name . "%' and season like '%" . $season_range . "%';"
+  // }
 
   // Execute query:
 	$result = mssql_query($SQL) or die('A error occured: ' . mysql_error());
