@@ -38,4 +38,20 @@ where{
   FILTER (?hurType = yago:Hurricane111467018 || ?hurType = yago:Category5AtlanticHurricanes || ?hurType = yago:RetiredAtlanticHurricanes)
   FILTER (lang(?abstract) = "en" && lang(?areaLabel) = "en")
 }
-LIMIT 100
+
+
+
+#### GeoNames query
+PREFIX gn: <http://www.geonames.org/ontology#>
+SELECT ?geoLocation ?code ?name ?country ?countryName
+WHERE{
+  ?geoLocation gn:featureClass <http://www.geonames.org/ontology#A> ;
+    gn:featureCode ?code .
+  OPTIONAL {
+    ?geoLocation gn:parentCountry ?country .
+    ?country gn:name ?countryName .
+  }
+  FILTER(?code = <http://www.geonames.org/ontology#A.ADM1> || ?code = <http://www.geonames.org/ontology#A.PCLI> || ?code = <http://www.geonames.org/ontology#A.PCLD>)
+  ?geoLocation gn:name ?name .
+  FILTER(CONTAINS(?name, @partofname)) 
+}
