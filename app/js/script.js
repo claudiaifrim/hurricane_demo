@@ -22,7 +22,7 @@ $(function() {
           } else {
             var results = "<ul>";
 
-            foreach (var key in response) {
+            for(var key in response) {
               results +="<li>" + response[key].country + "</li>" 
             }
             results += "</ul>";
