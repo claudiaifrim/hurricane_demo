@@ -6,6 +6,12 @@ create table areas (hurricaneurl TEXT NOT NULL, area TEXT, country TEXT, country
 select * from hurricanes where name like '%Katrina%';
 select * from hurricanes where name like '%Katrina%' and season like '%2005%';
 
+//// affected areas
+select s.hurricaneurl, s.name, s.year, s.hurType, s.season, s.damages, s.fatalities, s.winds, s.started, s.ended, a.country, a.countryurl, a.cuontrypop, a.province, a.provinceurl, a.provincepop from hurricanes s inner join areas a on s.hurricaneurl = a.hurricaneurl where s.name like '%Katrina%';
+select s.hurricaneurl, s.name, s.year, s.hurType, s.season, s.damages, s.fatalities, s.winds, s.started, s.ended, a.country, a.countryurl, a.cuontrypop, a.province, a.provinceurl, a.provincepop from hurricanes s inner join areas a on s.hurricaneurl = a.hurricaneurl where s.name like '%Katrina%' and s.year like '%2005%';
+
+
+
 //// select by province name 
 select distinct s.hurricaneurl, s.name, s.year, s.season, s.damages, s.fatalities, s.winds, s.started, s.ended, a.country, a.countryurl, a.cuontrypop, a.province, a.provinceurl, a.provincepop from hurricanes s inner join areas a on s.hurricaneurl = a.hurricaneurl where (a.area like '%Florida%' or a.province like '%Florida%' or a.country like '%Florida%' or s.areas like '%Florida%');
 select distinct s.hurricaneurl, s.name, s.year, s.season, s.damages, s.fatalities, s.winds, s.started, s.ended, a.country, a.countryurl, a.cuontrypop, a.province, a.provinceurl, a.provincepop from hurricanes s inner join areas a on s.hurricaneurl = a.hurricaneurl where (a.area like '%Florida%' or a.province like '%Florida%' or a.country like '%Florida%' or s.areas like '%Florida%') and s.year like '%2005%';
