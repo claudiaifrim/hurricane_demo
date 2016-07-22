@@ -2,6 +2,10 @@
 create table hurricanes (hurricaneurl TEXT NOT NULL, abstract TEXT, name TEXT, year TEXT, hurType TEXT, season TEXT, damages TEXT, fatalities TEXT, winds TEXT, started TEXT, ended TEXT, areas TEXT);
 create table areas (hurricaneurl TEXT NOT NULL, area TEXT, country TEXT, countryurl TEXT, cuontrypop TEXT, province TEXT, provinceurl TEXT, provincepop TEXT, provlat TEXT, provlong TEXT, contrylat TEXT, countrylong TEXT);
 
+mysql>LOAD DATA LOCAL INFILE '/home/keystone/hurricanes.tsv' INTO TABLE hurricanes; 
+mysql>LOAD DATA LOCAL INFILE '/home/keystone/areas.tsv' INTO TABLE areas; 
+
+
 //// select by hurricane name
 select * from hurricanes where name like '%Katrina%';
 select * from hurricanes where name like '%Katrina%' and season like '%2005%';
