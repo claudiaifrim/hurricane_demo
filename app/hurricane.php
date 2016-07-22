@@ -13,8 +13,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $season_range = '';
   }
 
+  // Connect to the database (host, username, password)
+  $con = mssql_connect('localhost','keystone','Key_16_Stone') or die('Could not connect to the server!');
+  // Select a database:
+  mssql_select_db('keystonedb') or die('Could not select a database.');
+
+  $SQL = "select s.hurricaneurl, s.name, s.year, s.hurType, s.season, s.damages, s.fatalities, s.winds, s.started, s.ended, a.country, a.countryurl, a.cuontrypop, a.province, a.provinceurl, a.provincepop from hurricanes s inner join areas a on s.hurricaneurl = a.hurricaneurl where s.name like '%" . $hurricane_name . "%';";
+
+  // Example query: (TOP 10 equal LIMIT 0,10 in MySQL)
+  if ($hurricane_name != '' && $season_range != '') {
+    $SQL = "select * from hurricanes where name like '%" . $hurricane_name . "%' and season like '%" . $season_range . "%';"
+  }
+
+  // Execute query:
+	$result = mssql_query($SQL) or die('A error occured: ' . mysql_error());
+	 
+	// Get result count:
+	$Count = mssql_num_rows($result);
+	// print "Showing $count rows:<hr/>\n\n";
+	 
+	$result = array();
+	// Fetch rows:
+	while ($Row = mssql_fetch_assoc($result)) {
+    $x = array('hurricaneurl' => $Row['hurricaneurl'], 'name' => $Row['name'], 'year' =>  $Row['year'], 'country' =>  $Row['country'], 'province' =>  $Row['province']);
+	 	array_push($result, $x);	
+	}
+	 
+	mssql_close($con);
+
+  die($result);
+
   header('Content-Type: application/json');
-  echo json_encode(array('foo' => 'bar'));
+  echo json_encode($result);
 
 //   $new_course = array(
 //     "nume" => $name,
